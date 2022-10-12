@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+
+    {% for address in addresses %}
+        <p><a href = "{% url 'search_final_view' address.id %} " >{{ address.name }}</a></p>
+    {% endfor %}
+
+{% endblock %}

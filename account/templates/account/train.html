@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Inter-City Train{% endblock %}
+
+{% block content %}
+    {% if submitted %}
+        {% if not_found %}
+            <p>Sorry, Station Not Found. Please Try Again. </p>
+        {% else %}
+            {% if not train_not_found %}
+                {% for train, fare, starting_time, arriving_time, station_list in my_zip %}
+                    <h1>{{ train.name }}</h1>
+                    <h3>Shovon Seat Fare: {{ fare }} </h3>
+                    <h3>Departure Time: {{ starting_time }} </h3>
+                    <h3>Arrival Time: {{ arriving_time }} </h3>
+                    <h3><u>Stations</u></h3>
+                    {% for station in station_list %}
+                        <p>{{ stationa }}</p>
+                    {% endfor %}
+                    <p> </p>
+                {% endfor %}
+            {% else %}
+                <p>Sorry, No Train Found.</p>
+            {% endif %}
+        {% endif %}
+    {% else %}
+
+
+
+    {% endif %}
+{% endblock %}

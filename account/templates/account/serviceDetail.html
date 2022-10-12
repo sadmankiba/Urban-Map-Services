@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Service Detail{% endblock %}
+
+{% block content %}
+    {% comment %}<h2>Service provider: {{ service.user }}</h2> {% endcomment %}
+    {% if service_not_found %}
+        <p>service not found</p>
+    {% else %}
+        <p>Service ID: {{ service.id }}</p>
+        <p>Service Provider: {{ provider }}</p>
+        <p>Service type: {{ service.service_type }}</p>
+        <p>Rating: {{ service.average_rating }}</p>
+        {%   if service.user_id != request.user.id %}
+            <p>Your Rating: {{ user_rating }}</p>
+            <form action = "." method = "post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Rate">
+            </form>
+        {% endif %}
+    {% endif %}
+
+
+{% endblock %}

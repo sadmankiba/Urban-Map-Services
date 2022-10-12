@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Service{% endblock %}
+
+{% block content %}
+    {% if deleted %}
+        <p>Service deleted</p>
+
+    {% else %}
+        {% if invalid_id %}
+            <p>id is not valid</p>
+        {% endif %}
+        <h2>Your services</h2>
+        {% for service in services %}
+            <p>Service id: {{ service.id }}</p>
+            <p>Service name: {{ service.name }}</p>
+            <p>Type: {{ service.service_type }}</p>
+            <p>Average Rating: {{ service.avg_rating }}</p>
+            <br>
+        {% endfor %}
+        <form action = "." method = "post">
+        {% csrf_token %}
+        <p>Delete a service:</p>
+        {{ form.as_p }}
+        <input type="submit" value = "Delete">
+        </form>
+    {% endif %}
+{% endblock %}

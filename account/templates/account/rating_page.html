@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Ratings{% endblock %}
+
+{% block content %}
+    {% for p in service_provider %}
+        <p>{{ p.name }}</p>
+        <p>{{ p.contact }}</p>
+        <p>{{ p.address }}</p>
+        <p>{{ p.average_rating }}</p>
+        <p>{{ p.rating_count }}</p>
+    {% endfor %}
+{% endblock %}

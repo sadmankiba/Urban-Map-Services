@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}City Bus{% endblock %}
+
+{% block content %}
+    {% if submitted %}
+        {% if not_found %}
+            <p>Sorry, Stop Not Found. Please Try Again. </p>
+        {% else %}
+            {% if not bus_not_found %}
+                {% for bus, fare, stop_list in my_zip %}
+                    <h1>{{ bus.name }}</h1>
+                    <h3>Fare: {{ fare }} </h3>
+                    <h3><u>Stops</u></h3>
+                    {% for stop in stop_list %}
+                        <p>{{ stop }}</p>
+                    {% endfor %}
+                    <p> </p>
+                {% endfor %}
+            {% else %}
+                <p>Sorry, No Bus Found.</p>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endblock %}

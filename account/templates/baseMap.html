@@ -1,0 +1,245 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+
+    <title>Mappo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/vlgna.css" %}">
+</head>
+<body>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    {% block google_map %} {% endblock %}
+
+    {% comment %}
+     <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+
+    <script src="{% static 'map/maps.js' %}"> </script>
+
+    <div class = "container-fluid" id="googleMaps"></div>
+    {% endcomment %}
+    <div class = "container-fluid" id="googleMaps"></div>
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="color: antiquewhite">&times;</a>
+
+
+        <div class="dropdown" onmouseover="openEmergency()" onmouseleave="closeEmergency()" >
+            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+               title="Emergency" id="emergency"  style="color: antiquewhite;">
+                Emergency
+            </a>
+
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'fire_service_view' %}">Fire Service&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    &nbsp&nbsp</a>
+                <a class="dropdown-item" href="{% url 'police_view' %}">Police</a>
+
+            </div>
+        </div>
+
+        <div class="dropdown" onmouseover="openHospital()" onmouseleave="closeHospital()" >
+            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+               title="Hospital" id="hospital"  style="color: antiquewhite;">
+                Hospital
+            </a>
+
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'medical_center_view' %}">Medical Center&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+                <a class="dropdown-item" href="{% url 'diagnostics_view' %}">Diagnostics</a>
+
+            </div>
+        </div>
+
+        <div class="dropdown" onmouseover="openUserService()" onmouseleave="closeUserService()">
+            <a class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+               title="Your Service" id="userService" style="color: antiquewhite">
+                Your Service
+            </a>
+
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'add_service_view' %}">Add Services</a>
+                <a class="dropdown-item" href="{% url 'delete_service_view' %}">Delete Services&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+            </div>
+        </div>
+
+
+
+        <div class="dropdown" onmouseover="openRoute()" onmouseleave="closeRoute()">
+            <a class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Route" id="route" onclick="openRoute()" style="color: antiquewhite;">
+                Route
+            </a>
+
+             <div class="dropdown-menu">
+                {% comment %}<a class="dropdown-item" href="{% url 'city_bus_view' %}">City Bus</a> {% endcomment %}
+                <form id="routeForm" action = "{% url 'city_bus_view' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ city_bus_form.origin.errors }}
+                        {{ city_bus_form.origin }}
+                        {% comment %}
+                        <label for="{{ city_bus_form.origin.id_for_label }}">Your email address:</label>
+                        <input type="text" class="form-control" id="presentLocation" placeholder="Your Current Location">
+                        {% endcomment %}
+                    </div>
+                    <div class="form-group">
+                        {{ city_bus_form.destination.errors }}
+                        {{ city_bus_form.destination }}
+                    </div>
+                    {% comment %}
+                    <button type="submit" class="btn-lg btn-primary btn-block">Drive</button>
+                    <button type="submit" class="btn-lg btn-primary btn-block">Walk</button>
+                    {% endcomment %}
+                    <button type="submit" class="btn-lg btn-primary btn-block">City Bus</button>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="dropdown" onmouseover="openInterCity()" onmouseleave="closeInterCity()">
+            <a class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+               title="Inter City" id="interCity" onclick="openInterCity()" style="color: antiquewhite">
+                Inter City
+            </a>
+
+            <div class="dropdown-menu">
+                {% comment %}
+                <a class="dropdown-item" href="{% url 'train_view' %}">Train</a>
+                <a class="dropdown-item" href="{% url 'bus_view' %}">Bus</a>
+                {% endcomment %}
+
+                <form id="interCityForm" action="{% url 'train_view' %}" method ="post" >
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ intercity_form.origin.errors }}
+                        {{ intercity_form.origin }}
+                        {% comment %}
+                        <input type="text" class="form-control" id="presentLocationCity" placeholder="Your Current Location">
+                        {% endcomment %}
+                    </div>
+                    <div class="form-group">
+                        {{ intercity_form.destination.errors }}
+                        {{ intercity_form.destination }}
+                        {% comment %}
+                        <input type="text" class="form-control" id="destinationCity" placeholder="Where You Want to Go?">
+                        {% endcomment %}
+                    </div>
+
+                    <button type="submit" class="btn-lg btn-primary btn-block">Train</button>
+                    <button type="submit" class="btn-lg btn-primary btn-block" formaction="{% url 'bus_view' %}">Bus</button>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <nav class="navbar navbar-expand-md bg-info navbar-light sticky-top">
+        <span onclick="openNav()" id="spanBar" style="color: black">&#9776;</span>
+
+
+        <a class="navbar-brand" href="{% url 'dashboard' %}">Mappo</a>
+
+        <div class="collapse navbar-collapse">
+            <form  action="{% url 'search_view' %}"  method="post">
+                {% csrf_token %}
+                {{ search_form.strr.errors }}
+                {{ search_form.strr }}
+                {% comment %}
+                <input type="search" class="form-control" id="searchbar"  placeholder="Search for Address..">
+                {% endcomment %}
+            </form>
+        </div>
+
+
+        <div class="dropdown ">
+
+
+            <a class=" dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="nearBy" style="color: antiquewhite;">
+                NearBy
+            </a>
+            <div class="dropdown-menu ">
+                <a class="dropdown-item" href="{% url 'bus_stop_view' %}">City Bus</a>
+                <a class="dropdown-item" href= "{% url 'restaurant_view' %}" >Restaurant</a>
+                <a class="dropdown-item" href="{% url 'shopping_mall_view' %}">Shopping Mall</a>
+                <a class="dropdown-item" href="{% url 'petrol_pump_view' %}">Petrol Pump</a>
+                <a class="dropdown-item" href="{% url 'atm_view' %}">ATM</a>
+                <a class="dropdown-item" href="{% url 'pharmacy_view' %}">Pharmacy</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="services" style="color: antiquewhite;">
+                Services
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'electricity_view' %}">Electricity</a>
+                <a class="dropdown-item" href="{% url 'plumber_view' %}">Plumber</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="markets" style="color: antiquewhite;">
+                Markets
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'chicken_view' %}">Chicken</a>
+                <a class="dropdown-item" href="{% url 'meat_view' %}">Meat</a>
+            </div>
+        </div>
+
+        {% if request.user.is_authenticated %}
+            <h5>Hello {{ request.user.first_name }},</h5>
+            <a href="{% url "logout" %}"><h4>Logout</h4></a>
+        {% endif %}
+
+
+
+    </nav>
+
+
+ {% block content %}
+ {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

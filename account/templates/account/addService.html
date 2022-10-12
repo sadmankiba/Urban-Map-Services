@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Add Service{% endblock %}
+
+{% block content %}
+    {% if added %}
+        <p>Service successfully added</p>
+    {% else %}
+        {% if invalid_form %}
+            <p>Form is not valid</p>
+        {% endif %}
+
+        <h1>Add Service</h1>
+        <p>Use the following form to add your services:</p>
+        <form action="." method="post">
+            {{ service_form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value = "Add Service">
+        </form>
+    {% endif %}
+{% endblock %}
+
