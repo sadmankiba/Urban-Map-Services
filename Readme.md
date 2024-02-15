@@ -4,7 +4,7 @@ Urban Map Services is a web application built with Python Django framework and P
 * Showing nearby restaurants, malls, ATMs and pharmacies
 * Searching for a location with partial name
 * Finding routes and schedules of buses and trains between two locations
-* Finding all bus or trains from a particular station 
+* Finding all buses or trains from a particular station 
 
 ## Directory structure
 
