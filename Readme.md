@@ -1,6 +1,10 @@
 # Urban Map Services
 
-Urban Map Services is a web application built with Python Django framework and PostgreSQL database management system to provide map-based services to users. The application employs model-view-controller (MVC) architecture where the models are relational tables stored in a database, the views are created with SQL queries for presenting the data, and the controller contains logic for updating the database and making corresponding changes in the views.
+Urban Map Services is a web application built with Python Django framework and PostgreSQL database management system to provide map-based services to users. The application employs model-view-controller (MVC) architecture where the models are relational tables stored in a database, the views are created with SQL queries for presenting the data, and the controller contains logic for updating the database and making corresponding changes in the views. Some of the services provided by the application include-
+* Showing nearby restaurants, malls, ATMs and pharmacies
+* Searching for a location with partial name
+* Finding routes and schedules of buses and trains between two locations
+* Finding all bus or trains from a particular station 
 
 ## Directory structure
 
